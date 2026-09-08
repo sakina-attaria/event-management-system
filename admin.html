@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — EventHub</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<div class="admin-layout">
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-brand">Event<span>Hub</span> <small>Admin</small></div>
+    <nav class="admin-nav">
+      <button class="admin-nav-link active" data-section="dashboard">📊 Dashboard</button>
+      <button class="admin-nav-link" data-section="events">🎫 Events</button>
+      <button class="admin-nav-link" data-section="bookings">📖 Bookings</button>
+      <button class="admin-nav-link" data-section="customers">👥 Customers</button>
+      <button class="admin-nav-link" data-section="reports">📈 Reports</button>
+      <button class="admin-nav-link" data-section="settings">⚙️ Settings</button>
+    </nav>
+    <a href="index.html" class="admin-back-link">← Back to Site</a>
+  </aside>
+
+  <!-- ===== Main content ===== -->
+  <div class="admin-main">
+    <header class="admin-topbar">
+      <button class="admin-menu-btn" id="adminMenuBtn" aria-label="Toggle sidebar">☰</button>
+      <h2 id="adminSectionTitle">Dashboard</h2>
+      <button class="theme-toggle" aria-label="Toggle dark mode">☾</button>
+    </header>
+
+    <div class="admin-content">
+
+      <!-- ---------- Dashboard ---------- -->
+      <section class="admin-section active" id="section-dashboard">
+        <div class="stats-grid" id="statsGrid"></div>
+      </section>
+
+      <!-- ---------- Events ---------- -->
+      <section class="admin-section" id="section-events">
+        <div class="admin-toolbar">
+          <input type="search" id="eventSearch" placeholder="Search events...">
+          <select id="eventStatusFilter">
+            <option value="">All Status</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="ongoing">Ongoing</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <button class="btn btn-primary" id="addEventBtn">+ Add Event</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="eventsTable">
+            <thead>
+              <tr>
+                <th data-sort="name">Name ⇅</th>
+                <th data-sort="category">Category ⇅</th>
+                <th data-sort="date">Date ⇅</th>
+                <th data-sort="price">Price ⇅</th>
+                <th>Seats</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="eventsTableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="eventsPagination"></div>
+      </section>
+
+      <!-- ---------- Bookings ---------- -->
+      <section class="admin-section" id="section-bookings">
+        <div class="admin-toolbar">
+          <input type="search" id="bookingSearch" placeholder="Search by customer or event...">
+          <select id="bookingStatusFilter">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="cancelled">Cancelled</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="bookingsTable">
+            <thead>
+              <tr>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Event</th>
+                <th>Tickets</th>
+                <th>Seats</th>
+                <th data-sort="totalAmount">Amount ⇅</th>
+                <th data-sort="bookingDate">Date ⇅</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="bookingsTableBody"></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="bookingsPagination"></div>
+      </section>
+
+      <!-- ---------- Customers ---------- -->
+      <section class="admin-section" id="section-customers">
+        <div class="admin-toolbar">
+          <input type="search" id="customerSearch" placeholder="Search customers...">
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="customersTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Total Bookings</th>
+                <th>Total Spending</th>
+                <th>Last Booking</th>
+              </tr>
+            </thead>
+            <tbody id="customersTableBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ---------- Reports ---------- -->
+      <section class="admin-section" id="section-reports">
+        <div class="admin-toolbar no-print">
+          <button class="btn btn-primary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        </div>
+        <div class="report-sheet" id="reportSheet"></div>
+      </section>
+
+      <!-- ---------- Settings ---------- -->
+      <section class="admin-section" id="section-settings">
+        <div class="settings-card">
+          <h3>Appearance</h3>
+          <p>Toggle between light and dark theme (also saved for the user site).</p>
+          <button class="btn btn-outline mt-md" id="settingsThemeBtn">Toggle Theme</button>
+        </div>
+        <div class="settings-card">
+          <h3>Data Management</h3>
+          <p>Export all data as JSON, or reset the system back to sample data.</p>
+          <div style="display:flex;gap:0.6rem;flex-wrap:wrap;margin-top:1rem;">
+            <button class="btn btn-outline" id="exportJsonBtn">Export JSON</button>
+            <button class="btn btn-outline" id="exportCsvBtn">Export Bookings CSV</button>
+            <button class="btn btn-danger" id="resetDataBtn">Reset All Data</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Event Modal -->
+<div class="modal-overlay" id="eventModalOverlay">
+  <div class="modal" style="max-width:560px;">
+    <div class="modal-header">
+      <h3 id="eventModalTitle">Add Event</h3>
+      <button class="modal-close" id="eventModalClose">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="eventForm">
+        <input type="hidden" id="eventFormId">
+        <div class="form-group">
+          <label for="eventName">Event Name</label>
+          <input type="text" id="eventName">
+        </div>
+        <div class="form-group">
+          <label for="eventCategory">Category</label>
+          <select id="eventCategory">
+            <option>Music</option><option>Conference</option><option>Comedy</option>
+            <option>Art</option><option>Sports</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="eventDescription">Description</label>
+          <textarea id="eventDescription" rows="3"></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="eventDate">Date</label><input type="date" id="eventDate"></div>
+          <div class="form-group"><label for="eventTime">Time</label><input type="time" id="eventTime"></div>
+        </div>
+        <div class="form-group">
+          <label for="eventLocation">Location</label>
+          <input type="text" id="eventLocation">
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label for="eventPrice">Price (Rs.)</label><input type="number" id="eventPrice" min="1"></div>
+          <div class="form-group"><label for="eventSeats">Total Seats</label><input type="number" id="eventSeats" min="1"></div>
+        </div>
+        <div class="form-group">
+          <label for="eventImage">Image URL</label>
+          <input type="text" id="eventImage" placeholder="https://...">
+        </div>
+        <div class="form-group">
+          <label for="eventStatus">Status</label>
+          <select id="eventStatus">
+            <option value="upcoming">Upcoming</option>
+            <option value="ongoing">Ongoing</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" id="eventFormCancel">Cancel</button>
+      <button class="btn btn-primary" id="eventFormSave">Save Event</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
