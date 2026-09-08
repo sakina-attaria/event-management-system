@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EventHub — Discover & Book Events</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- ===== Navbar ===== -->
+<nav class="navbar">
+  <div class="container">
+    <a href="index.html" class="brand">Event<span>Hub</span></a>
+    <button class="nav-toggle" aria-label="Toggle menu">☰</button>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Events</a></li>
+      <li><a href="my-bookings.html">My Bookings</a></li>
+      <li><a href="admin.html">Admin</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-toggle" aria-label="Toggle dark mode">☾</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== Hero ===== -->
+<header class="hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Find your next<br>unforgettable event</h1>
+      <p>Browse concerts, conferences, comedy nights and more — book your seats in minutes.</p>
+      <div class="hero-search">
+        <input type="search" id="heroSearch" class="js-search-input" placeholder="Search events (Ctrl+K)">
+        <select id="heroCategory">
+          <option value="">All Categories</option>
+          <option value="Music">Music</option>
+          <option value="Conference">Conference</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Art">Art</option>
+          <option value="Sports">Sports</option>
+        </select>
+        <button class="btn btn-primary" id="heroSearchBtn">Search</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80" alt="Live event crowd">
+    </div>
+  </div>
+</header>
+
+<!-- ===== Filters + Listing ===== -->
+<main class="section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <h2>Upcoming Events</h2>
+        <p>Filter by category, location, date or price to find the right event.</p>
+      </div>
+    </div>
+
+    <form class="filter-bar" id="filterForm">
+      <div class="field">
+        <label for="fName">Event name</label>
+        <input type="text" id="fName" placeholder="Search by name">
+      </div>
+      <div class="field">
+        <label for="fCategory">Category</label>
+        <select id="fCategory">
+          <option value="">All</option>
+          <option value="Music">Music</option>
+          <option value="Conference">Conference</option>
+          <option value="Comedy">Comedy</option>
+          <option value="Art">Art</option>
+          <option value="Sports">Sports</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="fLocation">Location</label>
+        <input type="text" id="fLocation" placeholder="City / venue">
+      </div>
+      <div class="field">
+        <label for="fDate">Date</label>
+        <input type="date" id="fDate">
+      </div>
+      <div class="field">
+        <label for="fPrice">Max price</label>
+        <input type="number" id="fPrice" placeholder="e.g. 3000" min="0">
+      </div>
+      <div class="field filter-submit">
+        <label>&nbsp;</label>
+        <button type="button" class="btn btn-outline btn-block" id="clearFilters">Clear</button>
+      </div>
+    </form>
+
+    <div id="eventGrid" class="event-grid">
+      <!-- Event cards injected by js/events.js -->
+    </div>
+
+    <div id="emptyState" class="empty-state" style="display:none;">
+      <h3>No events found</h3>
+      <p>Try adjusting your filters or search term.</p>
+    </div>
+
+    <div id="pagination" class="pagination"></div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2026 EventHub. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script src="js/events.js"></script>
+</body>
+</html>
