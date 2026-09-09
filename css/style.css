@@ -578,3 +578,8 @@ select:focus-visible, textarea:focus-visible {
 .badge.status-pending { background: var(--color-accent-dark); }
 .badge.status-cancelled { background: var(--color-danger); }
 .badge.status-completed { background: var(--color-text-secondary); }
+.lookup-bar { grid-template-columns: 1fr auto; align-items: end; }
+@media (max-width: 480px) {
+  .lookup-bar { grid-template-columns: 1fr; }
+  .lookup-bar button { width: 100%; }
+}
